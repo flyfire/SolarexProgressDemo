@@ -75,6 +75,7 @@ public class RectProgressbar extends View {
         mProgress = typedArray.getInt(R.styleable.RectProgressbar_rpb_progress, DEFAULT_PROGRESS);
         mGap = typedArray.getInt(R.styleable.RectProgressbar_rpb_gap, DEFAULT_GAP);
         mRectNum = typedArray.getInt(R.styleable.RectProgressbar_rpb_rectnum, DEFAULT_RECTNUM);
+        typedArray.recycle();
 
         mBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBgPaint.setColor(mBgColor);

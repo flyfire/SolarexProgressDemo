@@ -64,6 +64,7 @@ public class CommericalProgressbar extends View {
         mMax = typedArray.getInt(R.styleable.CommericalProgressbar_cpb_max, DEFAULT_MAX);
         mProgress = typedArray.getInt(R.styleable.CommericalProgressbar_cpb_progress,
                 DEFAULT_PROGRESS);
+        typedArray.recycle();
 
         mBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBgPaint.setStyle(Paint.Style.FILL);
