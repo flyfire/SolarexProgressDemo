@@ -93,7 +93,9 @@ public class CommericalProgressbar extends View {
         mSecondPaint.setStrokeWidth(50);
         mSecondPaint.setStrokeCap(Paint.Cap.ROUND);
         mSecondPaint.setColor(mSecondProgressColor);
+
         setProgress(mProgress);
+        setSecondProgress(mSecondProgress);
     }
 
     @Override
