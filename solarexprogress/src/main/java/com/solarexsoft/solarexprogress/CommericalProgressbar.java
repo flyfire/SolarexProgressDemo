@@ -35,6 +35,7 @@ public class CommericalProgressbar extends View {
     private RectF mForeRect;
     private RectF mSecondRect;
     private ValueAnimator mAnimator;
+    private ValueAnimator mSecondAnimator;
 
     private int DEFAULT_BACKGROUND_COLOR = Color.parseColor("#ff483a42");
     private int DEFAULT_FOREGROUND_COLOR = Color.parseColor("#ff5081f9");
@@ -121,6 +122,7 @@ public class CommericalProgressbar extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawRoundRect(mBgRect, mHeight, mHeight, mBgPaint);
+        mSecondRect.set(4, 4, mSecondWidth, mHeight - 4);
         canvas.drawRoundRect(mSecondRect, mHeight, mHeight, mSecondPaint);
         mForeRect.set(4, 4, mForeWidth - 4, mHeight - 4);
         canvas.drawRoundRect(mForeRect, mHeight, mHeight, mForePaint);
@@ -139,5 +141,20 @@ public class CommericalProgressbar extends View {
             }
         });
         mAnimator.start();
+    }
+
+    public void setSecondProgress(int secondProgress) {
+        float percent = (float) secondProgress / mMax;
+        mSecondAnimator = ValueAnimator.ofFloat(0, percent);
+        mSecondAnimator.setDuration(1000);
+        mSecondAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float nowPercent = (float) animation.getAnimatedValue();
+                mSecondWidth = (int) (nowPercent*mWidth);
+                invalidate();
+            }
+        });
+        mSecondAnimator.start();
     }
 }
