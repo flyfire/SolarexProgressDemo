@@ -13,7 +13,8 @@
 
     <com.solarexsoft.solarexprogress.CommericalProgressbar
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:cpb_secondprogress="80"/>
     <com.solarexsoft.solarexprogress.RectProgressbar
         android:layout_marginTop="50dp"
         android:layout_width="wrap_content"

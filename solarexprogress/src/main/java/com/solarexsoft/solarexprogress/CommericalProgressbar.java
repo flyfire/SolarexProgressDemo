@@ -20,21 +20,28 @@ public class CommericalProgressbar extends View {
     private Context mContext;
     private Paint mBgPaint;
     private Paint mForePaint;
+    private Paint mSecondPaint;
     private int mForeWidth;
+    private int mSecondWidth;
     private int mBgColor;
     private int mForeColor;
+    private int mSecondProgressColor;
     private int mMax;
     private int mProgress;
+    private int mSecondProgress;
     private int mWidth;
     private int mHeight;
     private RectF mBgRect;
     private RectF mForeRect;
+    private RectF mSecondRect;
     private ValueAnimator mAnimator;
 
     private int DEFAULT_BACKGROUND_COLOR = Color.parseColor("#ff483a42");
     private int DEFAULT_FOREGROUND_COLOR = Color.parseColor("#ff5081f9");
+    private int DEFAULT_SECONDPROGRESS_COLOR = Color.parseColor("#ff39304d");
     private int DEFAULT_MAX = 100;
     private int DEFAULT_PROGRESS = 70;
+    private int DEFAULT_SECONDPROGRESS = 0;
 
     private float DEFAULT_WIDTH = 300;
     private float DEFAULT_HEIGHT = 10;
@@ -61,9 +68,13 @@ public class CommericalProgressbar extends View {
                 DEFAULT_BACKGROUND_COLOR);
         mForeColor = typedArray.getColor(R.styleable.CommericalProgressbar_cpb_foreground,
                 DEFAULT_FOREGROUND_COLOR);
+        mSecondProgressColor = typedArray.getColor(R.styleable
+                .CommericalProgressbar_cpb_secondprogresscolor, DEFAULT_SECONDPROGRESS_COLOR);
         mMax = typedArray.getInt(R.styleable.CommericalProgressbar_cpb_max, DEFAULT_MAX);
         mProgress = typedArray.getInt(R.styleable.CommericalProgressbar_cpb_progress,
                 DEFAULT_PROGRESS);
+        mSecondProgress = typedArray.getInt(R.styleable.CommericalProgressbar_cpb_secondprogress,
+                DEFAULT_SECONDPROGRESS);
         typedArray.recycle();
 
         mBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -76,6 +87,11 @@ public class CommericalProgressbar extends View {
         mForePaint.setStrokeWidth(50);
         mForePaint.setStrokeCap(Paint.Cap.ROUND);
         mForePaint.setColor(mForeColor);
+        mSecondPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mSecondPaint.setStyle(Paint.Style.FILL);
+        mSecondPaint.setStrokeWidth(50);
+        mSecondPaint.setStrokeCap(Paint.Cap.ROUND);
+        mSecondPaint.setColor(mSecondProgressColor);
         setProgress(mProgress);
     }
 
@@ -95,14 +111,18 @@ public class CommericalProgressbar extends View {
         mBgRect = new RectF(2, 2, w - 2, h - 2);
         float percent = (float) mProgress / mMax;
         mForeWidth = (int) (percent * mWidth);
-        mForeRect = new RectF(4, 4, mForeWidth-4, mHeight - 4);
+        mForeRect = new RectF(4, 4, mForeWidth - 4, mHeight - 4);
+        float secondPercent = (float) mSecondProgress / mMax;
+        mSecondWidth = (int) (secondPercent * mWidth);
+        mSecondRect = new RectF(4, 4, mSecondWidth, mHeight - 4);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawRoundRect(mBgRect, mHeight, mHeight, mBgPaint);
-        mForeRect.set(4, 4, mForeWidth-4, mHeight - 4);
+        canvas.drawRoundRect(mSecondRect, mHeight, mHeight, mSecondPaint);
+        mForeRect.set(4, 4, mForeWidth - 4, mHeight - 4);
         canvas.drawRoundRect(mForeRect, mHeight, mHeight, mForePaint);
     }
 

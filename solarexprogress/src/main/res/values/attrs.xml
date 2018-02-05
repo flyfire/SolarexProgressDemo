@@ -4,6 +4,8 @@
         <attr name="cpb_foreground" format="color"/>
         <attr name="cpb_max" format="integer"/>
         <attr name="cpb_progress" format="integer"/>
+        <attr name="cpb_secondprogress" format="integer"/>
+        <attr name="cpb_secondprogresscolor" format="color"/>
     </declare-styleable>
     <declare-styleable name="RectProgressbar">
         <attr name="rpb_background" format="color"/>
