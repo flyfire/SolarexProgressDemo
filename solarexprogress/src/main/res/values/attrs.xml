@@ -1,0 +1,16 @@
+<resources>
+    <declare-styleable name="CommericalProgressbar">
+        <attr name="cpb_background" format="color"/>
+        <attr name="cpb_foreground" format="color"/>
+        <attr name="cpb_max" format="integer"/>
+        <attr name="cpb_progress" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="RectProgressbar">
+        <attr name="rpb_background" format="color"/>
+        <attr name="rpb_foreground" format="color"/>
+        <attr name="rpb_max" format="integer"/>
+        <attr name="rpb_progress" format="integer"/>
+        <attr name="rpb_gap" format="integer"/>
+        <attr name="rpb_rectnum" format="integer"/>
+    </declare-styleable>
+</resources>
