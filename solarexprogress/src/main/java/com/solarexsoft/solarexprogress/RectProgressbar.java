@@ -164,20 +164,6 @@ public class RectProgressbar extends View {
                 canvas.drawRect(mVerticalGapRectF, mGapPaint);
             }
         }
-        /*
-        for (int i = 0; i < mRectPerline; i++) {
-            mColorRectF.set(i * unitWidth, 0, i * unitWidth + singleRectWidth, mHeight);
-            mHorizontalGapRectF.set(i * unitWidth + singleRectWidth, 0, (i + 1) * unitWidth,
-                    mHeight);
-            if (i < mForeNum) {
-                canvas.drawRect(mColorRectF, mForePaint);
-            } else {
-                canvas.drawRect(mColorRectF, mBgPaint);
-            }
-            if (i != mRectPerline - 1) {
-                canvas.drawRect(mHorizontalGapRectF, mGapPaint);
-            }
-        }*/
     }
 
     public void setProgress(int progress) {
