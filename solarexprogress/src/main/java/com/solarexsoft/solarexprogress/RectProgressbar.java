@@ -61,6 +61,8 @@ public class RectProgressbar extends View {
     private int DEFAULT_WIDTH = 300;
     private int DEFAULT_HEIGHT = 40;
 
+    private ProgressCallback progressCallback = null;
+
     public RectProgressbar(Context context) {
         this(context, null);
     }
@@ -178,8 +180,20 @@ public class RectProgressbar extends View {
                 mForeNumi = mForeNum / mRectPerline;
                 mForeNumj = mForeNum % mRectPerline;
                 invalidate();
+                if (progressCallback != null) {
+                    progressCallback.onProgress((int) percent);
+                }
             }
         });
         mAnimator.start();
+    }
+
+    public void setProgressCallback(ProgressCallback progressCallback) {
+        this.progressCallback = progressCallback;
+    }
+
+    public static interface ProgressCallback {
+
+        public void onProgress(int percent);
     }
 }
