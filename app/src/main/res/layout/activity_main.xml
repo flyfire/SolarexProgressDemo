@@ -19,6 +19,9 @@
         android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-
-
+    <com.solarexsoft.solarexprogress.BubbleProgressView
+        android:id="@+id/bpv"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

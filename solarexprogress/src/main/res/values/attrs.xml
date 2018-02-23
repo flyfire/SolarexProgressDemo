@@ -15,4 +15,11 @@
         <attr name="rpb_gap" format="integer"/>
         <attr name="rpb_rectnum" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="BubbleProgressView">
+        <attr name="bpv_progress" format="integer"/>
+        <attr name="bpv_max" format="integer"/>
+        <attr name="bpv_bubbleheight" format="integer"/>
+        <attr name="bpv_bubblewidth" format="integer"/>
+        <attr name="bpv_bordercolor" format="color"/>
+    </declare-styleable>
 </resources>
