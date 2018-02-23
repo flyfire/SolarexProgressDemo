@@ -142,4 +142,9 @@ public class BubbleProgressView extends View {
         mPaintRect.setColor(color);
         invalidate();
     }
+
+    public void setBackgroundColor(int color) {
+        mBackgroundPaint.setColor(color);
+        invalidate();
+    }
 }

@@ -25,29 +25,39 @@ public class RectProgressbar extends View {
     private Paint mGapPaint;
     private ValueAnimator mAnimator;
     private int mForeNum;
+    private int mForeNumi;
+    private int mForeNumj;
 
     private int mBgColor;
     private int mForeColor;
     private int mMax;
     private int mProgress;
-    private int mGap;
-    private int mRectNum;
+    private int mHorizontalGap;
+    private int mVerticalGap;
+    private int mRectPerline;
+    private int mLineNumber;
     private int mWidth;
     private int mHeight;
 
-    int allGaps;
+    int allHorizontalGaps;
     int singleRectWidth;
     int unitWidth;
+    int allVerticalGaps;
+    int singleRectHeight;
+    int unitHeight;
 
     private RectF mColorRectF;
-    private RectF mGapRectF;
+    private RectF mHorizontalGapRectF;
+    private RectF mVerticalGapRectF;
 
     private int DEFAULT_BACKGROUND_COLOR = Color.parseColor("#ff1d2537");
     private int DEFAULT_FOREGROUND_COLOR = Color.parseColor("#ff436bc5");
     private int DEFAULT_MAX = 100;
     private int DEFAULT_PROGRESS = 61;
-    private int DEFAULT_GAP = 6;
-    private int DEFAULT_RECTNUM = 20;
+    private int DEFAULT_HORIZONTAL_GAP = 2;
+    private int DEFAULT_VERTICAL_GAP = 2;
+    private int DEFAULT_RECTPERLINE = 20;
+    private int DEFAULT_LINENUMBER = 5;
     private int DEFAULT_WIDTH = 300;
     private int DEFAULT_HEIGHT = 40;
 
@@ -73,8 +83,14 @@ public class RectProgressbar extends View {
                 DEFAULT_FOREGROUND_COLOR);
         mMax = typedArray.getInt(R.styleable.RectProgressbar_rpb_max, DEFAULT_MAX);
         mProgress = typedArray.getInt(R.styleable.RectProgressbar_rpb_progress, DEFAULT_PROGRESS);
-        mGap = typedArray.getInt(R.styleable.RectProgressbar_rpb_gap, DEFAULT_GAP);
-        mRectNum = typedArray.getInt(R.styleable.RectProgressbar_rpb_rectnum, DEFAULT_RECTNUM);
+        mHorizontalGap = typedArray.getInt(R.styleable.RectProgressbar_rpb_horizontalgap,
+                DEFAULT_HORIZONTAL_GAP);
+        mVerticalGap = typedArray.getInt(R.styleable.RectProgressbar_rpb_verticalgap,
+                DEFAULT_VERTICAL_GAP);
+        mRectPerline = typedArray.getInt(R.styleable.RectProgressbar_rpb_rectperline,
+                DEFAULT_RECTPERLINE);
+        mLineNumber = typedArray.getInt(R.styleable.RectProgressbar_rpb_linenumber,
+                DEFAULT_LINENUMBER);
         typedArray.recycle();
 
         mBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -91,7 +107,8 @@ public class RectProgressbar extends View {
         mGapPaint.setStrokeWidth(10);
 
         mColorRectF = new RectF();
-        mGapRectF = new RectF();
+        mHorizontalGapRectF = new RectF();
+        mVerticalGapRectF = new RectF();
 
         setProgress(mProgress);
     }
@@ -109,26 +126,58 @@ public class RectProgressbar extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = w;
         mHeight = h;
-        allGaps = mGap * (mRectNum - 1);
-        singleRectWidth = (mWidth - allGaps) / mRectNum;
-        unitWidth = mGap + singleRectWidth;
+        allHorizontalGaps = mHorizontalGap * (mRectPerline - 1);
+        singleRectWidth = (mWidth - allHorizontalGaps) / mRectPerline;
+        unitWidth = mHorizontalGap + singleRectWidth;
+        allVerticalGaps = mVerticalGap * (mLineNumber - 1);
+        singleRectHeight = (mHeight - allVerticalGaps) / mLineNumber;
+        unitHeight = mVerticalGap + singleRectHeight;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int i = 0; i < mRectNum; i++) {
+        for (int i = 0; i < mLineNumber; i++) {
+            int top = i * unitHeight;
+            for (int j = 0; j < mRectPerline; j++) {
+                mColorRectF.set(j * unitWidth,
+                        top,
+                        j * unitWidth + singleRectWidth,
+                        top + singleRectHeight);
+                mHorizontalGapRectF.set(j * unitWidth + singleRectWidth,
+                        top,
+                        (j + 1) * unitWidth,
+                        top + singleRectHeight);
+                if (i < mForeNumi || (i == mForeNumi && j < mForeNumj)) {
+                    canvas.drawRect(mColorRectF, mForePaint);
+                } else {
+                    canvas.drawRect(mColorRectF, mBgPaint);
+                }
+                if (j != mRectPerline - 1) {
+                    canvas.drawRect(mHorizontalGapRectF, mGapPaint);
+                }
+            }
+            int verticalGapTop = i * unitHeight + singleRectHeight;
+            int verticalGapBottom = verticalGapTop + mVerticalGap;
+            mVerticalGapRectF.set(0, verticalGapTop, mWidth, verticalGapBottom);
+            if (i < mLineNumber - 1) {
+                canvas.drawRect(mVerticalGapRectF, mGapPaint);
+            }
+        }
+        /*
+        for (int i = 0; i < mRectPerline; i++) {
             mColorRectF.set(i * unitWidth, 0, i * unitWidth + singleRectWidth, mHeight);
-            mGapRectF.set(i * unitWidth + singleRectWidth, 0, (i + 1) * unitWidth, mHeight);
+            mHorizontalGapRectF.set(i * unitWidth + singleRectWidth, 0, (i + 1) * unitWidth,
+                    mHeight);
             if (i < mForeNum) {
                 canvas.drawRect(mColorRectF, mForePaint);
             } else {
                 canvas.drawRect(mColorRectF, mBgPaint);
             }
-            if (i != mRectNum - 1){
-                canvas.drawRect(mGapRectF, mGapPaint);
+            if (i != mRectPerline - 1) {
+                canvas.drawRect(mHorizontalGapRectF, mGapPaint);
             }
-        }
+        }*/
     }
 
     public void setProgress(int progress) {
@@ -138,8 +187,10 @@ public class RectProgressbar extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float nowProgress = (float) animation.getAnimatedValue();
-                float percent = nowProgress * mRectNum / mMax;
-                mForeNum = new BigDecimal(percent).setScale(0,BigDecimal.ROUND_HALF_UP).intValue();
+                float percent = nowProgress * mRectPerline * mLineNumber / mMax;
+                mForeNum = new BigDecimal(percent).setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
+                mForeNumi = mForeNum / mRectPerline;
+                mForeNumj = mForeNum % mRectPerline;
                 invalidate();
             }
         });

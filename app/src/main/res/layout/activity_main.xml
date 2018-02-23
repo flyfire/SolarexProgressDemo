@@ -19,6 +19,12 @@
         android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <com.solarexsoft.solarexprogress.RectProgressbar
+        android:layout_marginTop="50dp"
+        app:rpb_linenumber="1"
+        app:rpb_rectperline="20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <com.solarexsoft.solarexprogress.BubbleProgressView
         android:id="@+id/bpv"
         android:layout_marginTop="50dp"

@@ -12,8 +12,10 @@
         <attr name="rpb_foreground" format="color"/>
         <attr name="rpb_max" format="integer"/>
         <attr name="rpb_progress" format="integer"/>
-        <attr name="rpb_gap" format="integer"/>
-        <attr name="rpb_rectnum" format="integer"/>
+        <attr name="rpb_horizontalgap" format="integer"/>
+        <attr name="rpb_verticalgap" format="integer"/>
+        <attr name="rpb_rectperline" format="integer"/>
+        <attr name="rpb_linenumber" format="integer"/>
     </declare-styleable>
     <declare-styleable name="BubbleProgressView">
         <attr name="bpv_progress" format="integer"/>
