@@ -26,16 +26,19 @@ public class BubbleProgressView extends View {
     private int DEFAULT_BUBBLE_HEIGHT = 100;
     private int DEFAULT_BUBBLE_WIDTH = 100;
     private int DEFAULT_BORDER_COLOR = Color.parseColor("#ff4f9bff");
+    private int DEFAULT_BACKGROUND_COLOR = Color.parseColor("#ff494149");
 
     private int mProgress;
     private int mMax;
     private int mBubbleHeight;
     private int mBubbleWidth;
     private int mBubbleBorderColor;
+    private int mBackgroundColor;
     private int mStrokeWidth = 8;
     private int mHalfStroke;
     private Context mContext;
     private Paint mPaintRect;
+    private Paint mBackgroundPaint;
     private Path mPathRect;
     private int mWidth;
     private int mHeight;
@@ -70,6 +73,8 @@ public class BubbleProgressView extends View {
                     DEFAULT_BUBBLE_WIDTH);
             mBubbleBorderColor = typedArray.getColor(R.styleable
                     .BubbleProgressView_bpv_bordercolor, DEFAULT_BORDER_COLOR);
+            mBackgroundColor = typedArray.getColor(R.styleable
+                    .BubbleProgressView_bpv_backgroundcolor, DEFAULT_BACKGROUND_COLOR);
             typedArray.recycle();
         }
         mPaintRect = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -78,6 +83,10 @@ public class BubbleProgressView extends View {
         mPaintRect.setColor(mBubbleBorderColor);
         mPaintRect.setPathEffect(new CornerPathEffect(15));
         mPaintRect.setStrokeJoin(Paint.Join.ROUND);
+        mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mBackgroundPaint.setStyle(Paint.Style.FILL);
+        mBackgroundPaint.setStrokeWidth(2);
+        mBackgroundPaint.setColor(mBackgroundColor);
         mPathRect = new Path();
         mHalfStroke = mStrokeWidth / 2;
     }
@@ -108,13 +117,13 @@ public class BubbleProgressView extends View {
         mPathRect.reset();
         mPathRect.moveTo(luodian - mBubbleWidth / 2, mBubbleHeight);
         mPathRect.lineTo(mHalfStroke, mBubbleHeight);
-        mPathRect.lineTo(mHalfStroke, mHeight-mHalfStroke);
-        mPathRect.lineTo(mWidth - mHalfStroke, mHeight-mHalfStroke);
+        mPathRect.lineTo(mHalfStroke, mHeight - mHalfStroke);
+        mPathRect.lineTo(mWidth - mHalfStroke, mHeight - mHalfStroke);
         mPathRect.lineTo(mWidth - mHalfStroke, mBubbleHeight);
-        mPathRect.lineTo(luodian+mBubbleWidth/2,mBubbleHeight);
+        mPathRect.lineTo(luodian + mBubbleWidth / 2, mBubbleHeight);
         mPathRect.lineTo(luodian, mHalfStroke);
         mPathRect.close();
-
+        canvas.drawPath(mPathRect, mBackgroundPaint);
         canvas.drawPath(mPathRect, mPaintRect);
     }
 
